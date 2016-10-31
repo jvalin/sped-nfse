@@ -24,10 +24,14 @@ class CancelarNfseEnvio extends Factory
                 throw InvalidArgumentException("No máximo pode ser solicitado o cancelamento de 50 NFSe por vez.");
             }
             foreach ($numeroNFSe as $num) {
-                $content .= $this->detalhe($prestadorIM, $num, $remetenteTipoDoc, $remetenteCNPJCPF, $codigoMunicipio);
+                $content .= $this->detalhe(
+                    $prestadorIM, $num, $remetenteTipoDoc, $remetenteCNPJCPF, $codigoMunicipio
+                );
             }
         } else {
-            $content .= $this->detalhe($prestadorIM, $numeroNFSe, $remetenteTipoDoc, $remetenteCNPJCPF, $codigoMunicipio);
+            $content .= $this->detalhe(
+                $prestadorIM, $numeroNFSe, $remetenteTipoDoc, $remetenteCNPJCPF, $codigoMunicipio
+            );
         }
         $content .= "</tc:InfPedidoCancelamento>";
         $content .= "</Pedido>";
