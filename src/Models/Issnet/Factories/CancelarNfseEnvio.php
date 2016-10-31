@@ -25,12 +25,20 @@ class CancelarNfseEnvio extends Factory
             }
             foreach ($numeroNFSe as $num) {
                 $content .= $this->detalhe(
-                    $prestadorIM, $num, $remetenteTipoDoc, $remetenteCNPJCPF, $codigoMunicipio
+                    $prestadorIM,
+                    $num,
+                    $remetenteTipoDoc,
+                    $remetenteCNPJCPF,
+                    $codigoMunicipio
                 );
             }
         } else {
             $content .= $this->detalhe(
-                $prestadorIM, $numeroNFSe, $remetenteTipoDoc, $remetenteCNPJCPF, $codigoMunicipio
+                $prestadorIM,
+                $numeroNFSe,
+                $remetenteTipoDoc,
+                $remetenteCNPJCPF,
+                $codigoMunicipio
             );
         }
         $content .= "</tc:InfPedidoCancelamento>";
