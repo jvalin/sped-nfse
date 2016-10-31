@@ -59,7 +59,8 @@ class ConsultarNfseEnvio extends Factory
         $inscricaoMunicipalTomador = ''
     ) {
         $method = "ConsultarNfseEnvio";
-        $content = $this->requestFirstPart($method);
+        $xsd = 'servico_consultar_nfse_envio';
+        $content = $this->requestFirstPart($method, $xsd);
         $content .= Header::render(
             $remetenteTipoDoc,
             $remetenteCNPJCPF,
@@ -73,9 +74,9 @@ class ConsultarNfseEnvio extends Factory
         );
         $content .= "</$method>";
 
-        $body = $this->clear($content);
-        $body = $this->signer($body, $method, '', [false,false,null,null]);
-        $this->validar($versao, $body, 'Issnet', 'servico_consultar_nfse_envio', '');
+        $content = $this->clear($content);
+        $body = $this->signer($content, $method, '', [false,false,null,null]);
+        $this->validar($versao, $body, 'Issnet', $xsd, '');
         return $body;
     }
 }

@@ -122,6 +122,7 @@ abstract class Tools
         if (isset($config->inscricaoMunicipal)) {
             $this->inscricaoMunicipal = $config->inscricaoMunicipal;
         }
+        $this->codigoMunicipio = $config->cmun;
         $this->remetenteTipoDoc = 1;
         if ($config->cnpj != '') {
             $this->remetenteCNPJCPF = $config->cnpj;

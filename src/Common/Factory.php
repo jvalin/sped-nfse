@@ -88,7 +88,21 @@ class Factory
             $schema
         );
     }
-    
+
+    /**
+     * @param      $tag
+     * @param null $info
+     *
+     * @return string
+     */
+    protected function check($tag, $info = null)
+    {
+        if (is_null($info)) {
+            return '';
+        }
+        return "<$tag>$info</$tag>";
+    }
+
     /**
      * Monta a assinatura
      * @param string $content

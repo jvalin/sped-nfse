@@ -16,15 +16,35 @@ namespace NFePHP\NFSe\Models\Issnet;
  * @link      http://github.com/nfephp-org/sped-nfse for the canonical source repository
  */
 
-use NFePHP\NFSe\Models\Issnet\Rps;
+use NFePHP\NFSe\Models\Issnet\Factories\CancelarNfseEnvio;
 use NFePHP\NFSe\Models\Issnet\Factories\ConsultarNfseEnvio;
 use NFePHP\NFSe\Common\Tools as ToolsBase;
 use NFePHP\Common\Soap\SoapCurl;
 
 class Tools extends ToolsBase
 {
-    public function cancelarNfse()
-    {
+    /**
+     * @param $numeroNFSe
+     *
+     * @return string
+     */
+    public function cancelamentoNFSe(
+        $numeroNFSe
+    ) {
+	    $this->method = 'CancelarNfseEnvio';
+	    $fact = new CancelarNfseEnvio($this->certificate);
+	    $fact->setSignAlgorithm($this->algorithm);
+	    $message = $fact->render(
+            $this->versao,
+		    $this->remetenteTipoDoc,
+		    $this->remetenteCNPJCPF,
+		    $this->inscricaoMunicipal,
+            $this->codigoMunicipio,
+            $numeroNFSe
+	    );
+        return $message;
+//	    return $this->sendRequest('', $message);
+
     }
     
     public function consultaNFSePorRPS()
