@@ -13,7 +13,7 @@ class CancelarNfseEnvio extends Factory
         $prestadorIM,
         $codigoMunicipio,
         $numeroNFSe
-    ){
+    ) {
         $method = "CancelarNfseEnvio";
         $xsd = 'servico_cancelar_nfse_envio';
         $content = $this->requestFirstPart($method, $xsd);
@@ -34,7 +34,6 @@ class CancelarNfseEnvio extends Factory
         $content .= "</$method>";
         $content = $this->signer($content, $method, '', [false,false,null,null]);
         $body = $this->clear($content);
-        print_r($content);
         $this->validar($versao, $body, 'Issnet', $xsd, '');
         return $body;
     }
@@ -42,14 +41,14 @@ class CancelarNfseEnvio extends Factory
     private function detalhe($prestadorIM, $numeroNFSe, $remetenteTipoDoc, $remetenteCNPJCPF, $codigoMunicipio)
     {
         $detalhe = "<tc:IdentificacaoNfse>";
-        $detalhe .= $this->check("tc:Numero",$numeroNFSe);
+        $detalhe .= $this->check("tc:Numero", $numeroNFSe);
         if ($remetenteTipoDoc == 2) {
-            $detalhe .= $this->check("tc:Cnpj",$remetenteCNPJCPF);
+            $detalhe .= $this->check("tc:Cnpj", $remetenteCNPJCPF);
         } else {
-            $detalhe .= $this->check("tc:Cpf",$remetenteCNPJCPF);
+            $detalhe .= $this->check("tc:Cpf", $remetenteCNPJCPF);
         }
-        $detalhe .= $this->check("tc:InscricaoMunicipal",$prestadorIM);
-        $detalhe .= $this->check("tc:CodigoMunicipio",$codigoMunicipio);
+        $detalhe .= $this->check("tc:InscricaoMunicipal", $prestadorIM);
+        $detalhe .= $this->check("tc:CodigoMunicipio", $codigoMunicipio);
         $detalhe .= "</tc:IdentificacaoNfse>";
         return $detalhe;
     }

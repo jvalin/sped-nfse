@@ -31,20 +31,19 @@ class Tools extends ToolsBase
     public function cancelamentoNFSe(
         $numeroNFSe
     ) {
-	    $this->method = 'CancelarNfseEnvio';
-	    $fact = new CancelarNfseEnvio($this->certificate);
-	    $fact->setSignAlgorithm($this->algorithm);
-	    $message = $fact->render(
+        $this->method = 'CancelarNfseEnvio';
+        $fact = new CancelarNfseEnvio($this->certificate);
+        $fact->setSignAlgorithm($this->algorithm);
+        $message = $fact->render(
             $this->versao,
-		    $this->remetenteTipoDoc,
-		    $this->remetenteCNPJCPF,
-		    $this->inscricaoMunicipal,
+            $this->remetenteTipoDoc,
+            $this->remetenteCNPJCPF,
+            $this->inscricaoMunicipal,
             $this->codigoMunicipio,
             $numeroNFSe
-	    );
+        );
         return $message;
 //	    return $this->sendRequest('', $message);
-
     }
     
     public function consultaNFSePorRPS()
