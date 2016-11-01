@@ -16,8 +16,6 @@ namespace NFePHP\NFSe\Models\Issnet;
  * @link      http://github.com/nfephp-org/sped-nfse for the canonical source repository
  */
 
-use NFePHP\NFSe\Models\Issnet\Factories\CancelarNfseEnvio;
-use NFePHP\NFSe\Models\Issnet\Factories\ConsultarNfseEnvio;
 use NFePHP\NFSe\Models\Issnet\Rps;
 use NFePHP\NFSe\Models\Issnet\Factories;
 use NFePHP\NFSe\Common\Tools as ToolsBase;
