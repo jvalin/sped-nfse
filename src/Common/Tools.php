@@ -55,12 +55,12 @@ abstract class Tools
      */
     protected $versao;
     /**
-     * Type of document
+     * Type of Federal registration
      * @var int
      */
     protected $remetenteTipoDoc;
     /**
-     * Document
+     * Federal registration number
      * @var string
      */
     protected $remetenteCNPJCPF;
@@ -69,6 +69,11 @@ abstract class Tools
      * @var string
      */
     protected $remetenteRazao;
+    /**
+     * Municipal registration number
+     * @var string
+     */
+    protected $remetenteIM;
     /**
      * Webservices URL's
      * @var array
@@ -119,10 +124,14 @@ abstract class Tools
         $this->versao = $config->versao;
         $this->remetenteCNPJCPF = $config->cpf;
         $this->remetenteRazao = $config->razaosocial;
+<<<<<<< HEAD
         if (isset($config->inscricaoMunicipal)) {
             $this->inscricaoMunicipal = $config->inscricaoMunicipal;
         }
         $this->codigoMunicipio = $config->cmun;
+=======
+        $this->remetenteIM = $config->im;
+>>>>>>> upstream/master
         $this->remetenteTipoDoc = 1;
         if ($config->cnpj != '') {
             $this->remetenteCNPJCPF = $config->cnpj;

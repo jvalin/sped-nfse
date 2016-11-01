@@ -18,95 +18,133 @@ namespace NFePHP\NFSe\Models\Issnet;
 
 use NFePHP\NFSe\Models\Issnet\Factories\CancelarNfseEnvio;
 use NFePHP\NFSe\Models\Issnet\Factories\ConsultarNfseEnvio;
+use NFePHP\NFSe\Models\Issnet\Rps;
+use NFePHP\NFSe\Models\Issnet\Factories;
 use NFePHP\NFSe\Common\Tools as ToolsBase;
-use NFePHP\Common\Soap\SoapCurl;
 
 class Tools extends ToolsBase
 {
     /**
-     * @param $numeroNFSe
+     * @param $numero
+     * @param $codigoCancelamento
      *
      * @return string
+     * @internal param $numeroNFSe
+     *
      */
-    public function cancelamentoNFSe(
-        $numeroNFSe
-    ) {
+    public function cancelarNfse($numero, $codigoCancelamento)
+    {
         $this->method = 'CancelarNfseEnvio';
-        $fact = new CancelarNfseEnvio($this->certificate);
+        $fact = new Factories\CancelarNfse($this->certificate);
         $fact->setSignAlgorithm($this->algorithm);
         $message = $fact->render(
-            $this->versao,
+            $this->config->versao,
             $this->remetenteTipoDoc,
             $this->remetenteCNPJCPF,
-            $this->inscricaoMunicipal,
-            $this->codigoMunicipio,
-            $numeroNFSe
-        );
-        return $message;
-//	    return $this->sendRequest('', $message);
-    }
-    
-    public function consultaNFSePorRPS()
-    {
-    }
-    
-    public function consultarLoteRps()
-    {
-    }
-
-    /**
-     * @param $cnpjPrestador
-     * @param $cpfPrestador
-     * @param $imPrestador
-     * @param $dtInicio
-     * @param $dtFim
-     * @param $pagina
-     *
-     * @return string
-     */
-    public function consultaNFSeEmitidas(
-        $dtInicio,
-        $dtFim,
-        $cnpjPrestador = '',
-        $cpfPrestador = '',
-        $imPrestador = '',
-        $pagina = ''
-    ) {
-        $this->method = 'ConsultarNFseEnvio';
-        $fact = new ConsultarNFSeEnvio($this->certificate);
-        $fact->setSignAlgorithm($this->algorithm);
-        $message = $fact->render(
-            $this->remetenteTipoDoc,
-            $this->remetenteCNPJCPF,
-            $this->inscricaoMunicipal,
-            $dtInicio,
-            $dtFim
+            $this->remetenteIM,
+            $this->config->cmun,
+            $numero,
+            $codigoCancelamento
         );
         return $this->sendRequest('', $message);
     }
     
-    public function consultarNFSePorRPS()
+    public function consultarUrlVisualizacaoNfse($numero, $codigoTributacao)
     {
+        $this->method = 'ConsultarUrlVisualizacaoNfseEnvio';
+        $fact = new Factories\ConsultarUrlVisualizacaoNfse($this->certificate);
+        $fact->setSignAlgorithm($this->algorithm);
+        $message = $fact->render(
+            $this->config->versao,
+            $this->remetenteTipoDoc,
+            $this->remetenteCNPJCPF,
+            $this->remetenteIM,
+            $numero,
+            $codigoTributacao
+        );
+        return $this->sendRequest('', $message);
     }
     
-    public function consultarSituacaoLoteRPS()
+    public function consultarUrlVisualizacaoNfseSerie($numero, $codigoTributacao, $serie)
     {
+        $this->method = 'ConsultarUrlVisualizacaoNfseSerieEnvio';
+        $fact = new Factories\ConsultarUrlVisualizacaoNfse($this->certificate);
+        $fact->setSignAlgorithm($this->algorithm);
+        $message = $fact->render(
+            $this->config->versao,
+            $this->remetenteTipoDoc,
+            $this->remetenteCNPJCPF,
+            $this->remetenteIM,
+            $numero,
+            $codigoTributacao,
+            $serie
+        );
+        return $this->sendRequest('', $message);
     }
     
-    public function consultarUrlVisualizacaoNfse()
+    
+    public function enviarLoteRps($rpss)
     {
+        $this->method = 'EnviarLoteRpsEnvio';
+    }
+
+    public function consultarNFSe(
+        $numeroNFSe = '',
+        $dtInicio = '',
+        $dtFim = '',
+        $tomador = [],
+        $intermediario = []
+    ) {
+        $this->method = 'ConsultarNFseEnvio';
+        $fact = new Factories\ConsultarNFseEnvio($this->certificate);
+        $fact->setSignAlgorithm($this->algorithm);
+        $message = $fact->render(
+            $this->config->versao,
+            $this->remetenteTipoDoc,
+            $this->remetenteCNPJCPF,
+            $this->remetenteIM,
+            $numeroNFSe,
+            $dtInicio,
+            $dtFim,
+            $tomador,
+            $intermediario
+        );
+        return $this->sendRequest('', $message);
     }
     
-    public function consultarUrlVisualizacaoNfseSerie()
+    public function consultarNfseRps($numero, $serie, $tipo)
     {
+        $this->method = 'ConsultarNfseRpsEnvio';
     }
     
-    public function consultaSituacaoLoteRPS()
+    public function consultarLoteRps($protocolo)
     {
+        $this->method = 'ConsultarLoteRpsEnvio';
+        $fact = new Factories\ConsultarLoteRps($this->certificate);
+        $fact->setSignAlgorithm($this->algorithm);
+        $message = $fact->render(
+            $this->config->versao,
+            $this->remetenteTipoDoc,
+            $this->remetenteCNPJCPF,
+            $this->remetenteIM,
+            $protocolo
+        );
+        return $this->sendRequest('', $message);
     }
     
-    public function recepcionarLoteRps()
+    public function consultarSituacaoLoteRps($protocolo)
     {
+        $this->method = 'ConsultarSituacaoLoteRpsEnvio';
+        $fact = new Factories\ConsultarSituacaoLoteRps($this->certificate);
+        $fact->setSignAlgorithm($this->algorithm);
+        $message = $fact->render(
+            $this->config->versao,
+            $this->remetenteTipoDoc,
+            $this->remetenteCNPJCPF,
+            $this->remetenteIM,
+            $protocolo
+        );
+        return $this->sendRequest('', $message);
     }
     
     protected function sendRequest($url, $message)
@@ -114,7 +152,7 @@ class Tools extends ToolsBase
         //no caso do ISSNET o URL é unico para todas as ações
         $url = $this->url[$this->config->tpAmb];
         if (!is_object($this->soap)) {
-            $this->soap = new SoapCurl($this->certificate);
+            $this->soap = new \NFePHP\NFSe\Common\SoapCurl($this->certificate);
         }
         $messageText = $message;
         if ($this->withcdata) {
@@ -127,6 +165,13 @@ class Tools extends ToolsBase
         $params = [
             'xml' => $message
         ];
+        
+        //retorna o XML durante a fase desenvolvimento dos xml
+        //depois retirar esse retorno na fase de testes com o
+        //webservice, usando primeiro o SOAPUI e depois realizando
+        //os testes com o soap pelo PHP
+        return $messageText;
+        /*
         $action = "\"". $this->xmlns ."/". $this->method ."\"";
         return $this->soap->send(
             $url,
@@ -137,5 +182,6 @@ class Tools extends ToolsBase
             $this->namespaces[$this->soapversion],
             $request
         );
+         */
     }
 }

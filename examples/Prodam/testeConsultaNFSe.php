@@ -80,17 +80,17 @@ try {
     //a mesma interface
     $nfse->tools->setSoapClass(new SoapNative());
     
-    //abaixo esta a chamada do método que consulta as NFSe emitidas por 
-    //um emitente autorizado, os dados devem ser fornecidos sempr eno formato
+    //abaixo esta a chamada do método que consulta as NFSe geradas e os RPS enviados
+    //por um emitente autorizado, os dados devem ser fornecidos sempre no formato
     //indicado, o metodo não irá validar os dados fornecidos!!
-    $cnpj = '99999999999999';
-    $cpf = '';
-    $im = '12345678';
-    $dtInicial = '2016-08-01';
-    $dtFinal = '2016-09-01';
-    $pagina = 1;
-    $response = $nfse->tools->consultaNFSeEmitidas($cnpj, $cpf, $im, $dtInicial, $dtFinal, $pagina);
-    
+    //Você pode procurar por NFSe ou por RPS oua ainda ambos
+    $im = '99999999';
+    $aListaNFSe = [0=>['prestadorIM'=>$im,'numeroNFSe'=>'577']];
+    $aListaRPS = [0=>['prestadorIM'=>$im,'serieRPS'=>'1', 'numeroRPS'=>'12']];
+    $response = $nfse->tools->consultaNFSe(
+        $aListaNFSe,
+        $aListaRPS
+    );
     //esse XML retornado na resposta SOAP poderá ser convertido, de assim for desejado, em uma stdClass 
     //para facilitar a extração dos dados para uso da aplicação. Para isso 
     //usamos a classe Response::readReturn($tag, $response) passando 

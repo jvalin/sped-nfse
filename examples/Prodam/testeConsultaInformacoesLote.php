@@ -80,16 +80,13 @@ try {
     //a mesma interface
     $nfse->tools->setSoapClass(new SoapNative());
     
-    //abaixo esta a chamada do método que consulta as NFSe emitidas por 
-    //um emitente autorizado, os dados devem ser fornecidos sempr eno formato
-    //indicado, o metodo não irá validar os dados fornecidos!!
-    $cnpj = '99999999999999';
-    $cpf = '';
-    $im = '12345678';
-    $dtInicial = '2016-08-01';
-    $dtFinal = '2016-09-01';
-    $pagina = 1;
-    $response = $nfse->tools->consultaNFSeEmitidas($cnpj, $cpf, $im, $dtInicial, $dtFinal, $pagina);
+    //abaixo esta a chamada do método que consulta as informações do lote
+    //enviado por um emitente autorizado, os dados devem ser fornecidos 
+    //sempre no formato indicado, o metodo não irá validar os dados fornecidos!!
+    $im = '99999999';
+    $lote = '20101'; //este numero de lote é fornecido na resposta do envio de lote
+                     //pelo sistema da prefeitura NÃO É UM NUMERO GERADO PELO EMITENTE
+    $response = $nfse->tools->consultaInformacoesLote($im, $lote);
     
     //esse XML retornado na resposta SOAP poderá ser convertido, de assim for desejado, em uma stdClass 
     //para facilitar a extração dos dados para uso da aplicação. Para isso 

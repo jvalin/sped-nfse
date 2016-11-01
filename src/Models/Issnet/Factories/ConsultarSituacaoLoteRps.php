@@ -5,22 +5,20 @@ namespace NFePHP\NFSe\Models\Issnet\Factories;
 use NFePHP\NFSe\Models\Issnet\Factories\Header;
 use NFePHP\NFSe\Models\Issnet\Factories\Factory;
 
-class ConsultarUrlVisualizacaoNfse extends Factory
+class ConsultarSituacaoLoteRps extends Factory
 {
     public function render(
         $versao,
         $remetenteTipoDoc,
         $remetenteCNPJCPF,
         $inscricaoMunicipal,
-        $numero,
-        $codigoTributacao
+        $protocolo
     ) {
-        $method = "ConsultarUrlVisualizacaoNfseEnvio";
-        $xsd = 'servico_consultar_url_visualizacao_nfse_envio';
+        $method = "ConsultarSituacaoLoteRpsEnvio";
+        $xsd = 'servico_consultar_situacao_lote_rps_envio';
         $content = $this->requestFirstPart($method, $xsd);
         $content .= Header::render($remetenteTipoDoc, $remetenteCNPJCPF, $inscricaoMunicipal);
-        $content .= "<Numero>$numero</Numero>";
-        $content .= "<CodigoTributacaoMunicipio>$codigoTributacao</CodigoTributacaoMunicipio>";
+        $content .= "<Protocolo>$protocolo</Protocolo>";
         $content .= "</$method>";
         $body = $this->clear($content);
         $this->validar($versao, $body, 'Issnet', $xsd, '');
