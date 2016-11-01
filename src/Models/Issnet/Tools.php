@@ -82,21 +82,31 @@ class Tools extends ToolsBase
         return $this->sendRequest('', $message);
     }
     
-    
-    public function enviarLoteRps($rpss)
+    public function enviarLoteRps($lote, $rpss)
     {
         $this->method = 'EnviarLoteRpsEnvio';
+        $fact = new Factories\EnviarLoteRps($this->certificate);
+        $fact->setSignAlgorithm($this->algorithm);
+        $message = $fact->render(
+            $this->config->versao,
+            $this->remetenteTipoDoc,
+            $this->remetenteCNPJCPF,
+            $this->remetenteIM,
+            $lote,
+            $rpss
+        );
+        return $this->sendRequest('', $message);
     }
 
-    public function consultarNFSe(
+    public function consultarNfse(
         $numeroNFSe = '',
         $dtInicio = '',
         $dtFim = '',
         $tomador = [],
         $intermediario = []
     ) {
-        $this->method = 'ConsultarNFseEnvio';
-        $fact = new Factories\ConsultarNFseEnvio($this->certificate);
+        $this->method = 'ConsultarNfseEnvio';
+        $fact = new Factories\ConsultarNfse($this->certificate);
         $fact->setSignAlgorithm($this->algorithm);
         $message = $fact->render(
             $this->config->versao,
@@ -115,6 +125,18 @@ class Tools extends ToolsBase
     public function consultarNfseRps($numero, $serie, $tipo)
     {
         $this->method = 'ConsultarNfseRpsEnvio';
+        $fact = new Factories\ConsultarNfseRps($this->certificate);
+        $fact->setSignAlgorithm($this->algorithm);
+        $message = $fact->render(
+            $this->config->versao,
+            $this->remetenteTipoDoc,
+            $this->remetenteCNPJCPF,
+            $this->remetenteIM,
+            $numero,
+            $serie,
+            $tipo
+        );
+        return $this->sendRequest('', $message);
     }
     
     public function consultarLoteRps($protocolo)
